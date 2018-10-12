@@ -1,0 +1,91 @@
+\documentclass{beamer}
+\usetheme{Boadilla}
+\usepackage{amsmath, amsfonts, amssymb, mathtools, enumerate, color}
+\usepackage{graphicx}
+\title[Consensus Protocols in Blockchain]{Consensus Protocols in Blockchain } % The short title appears at the bottom of every slide, the full title is only on the title page
+\author[Abhishek Kumar Sinha (173190019)]{\footnotesize IE 797: Phase 1 Seminar\\
+by\\
+\bf Abhishek Kumar Sinha (173190019)} % Your name
+
+\institute[] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{under the guidance of \\
+Prof. K.S.Mallikarjuna Rao\\
+\medskip
+\begin{center}
+\includegraphics[scale=0.15]{iit_logo}
+\end{center}
+Industrial Engineering \& Operations Research \\ % Your institution for the title page
+IIT Bombay\\
+\medskip
+% \textit{sufiyan@iitb.ac.in} % Your email address
+}
+\date{Oct 15 2018}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents
+\end{frame}
+%%%%%%%%%%%%Section -1 Blockchain Primer%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction to Blockchain}
+\begin{frame}{What is a Blockchain?}
+It is the following:
+\begin{itemize}
+    \item \textbf{It is a chain of blocks linked together}
+\end{itemize}
+\begin{figure}[H]\centering 
+\includegraphics[scale = 0.35]{blockchain1.jpg}
+\caption{Block-chain}
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{What is a Blockchain?}
+It is the following:
+\begin{itemize}
+    \item It is a chain of blocks linked together 
+    \item \textbf{It is a linear data-structure(each block stores data)}
+\end{itemize}
+\begin{figure}[H]\centering 
+\includegraphics[scale = 0.5]{bc2}
+\caption{Block-chain}
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{What is a Blockchain?}
+It is the following:
+\begin{itemize}
+    \item It is a chain of blocks linked together (apparent)
+    \item It is a linear data-structure(each block stores data)
+    \item \textbf{It is a distributed ledger(data is in the form of transactions which are stored by everyone on the network)}
+\end{itemize}
+\begin{figure}[H]\centering 
+\includegraphics[scale = 0.25]{bc3}
+\caption{Distributed Ledger}
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{frame}{Components of a Block}
+n<variablename> represents integer type //
+hash<variablename> represents double hash output of SHA-256
+\begin{figure}[H]\centering 
+\includegraphics[scale = 0.3]{block}
+\caption{Components of a block}
+\end{figure}
+    
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%bibliography%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{plain}
+\bibliography{biblist}
+\end{document}
