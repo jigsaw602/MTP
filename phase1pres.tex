@@ -77,16 +77,32 @@ It is the following:
 
 \begin{frame}{Components of a Block}
 n represents integer type \\
-hash represents double hash output of SHA-256
+hash represents double hash output of SHA-256 hash function
 \begin{figure}[H]\centering 
-\includegraphics[scale = 0.3]{block}
+\includegraphics[scale = 0.45]{compblock}
 \caption{Components of a block}
 \end{figure}
     
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Components of a Block}
-    
+\begin{frame}{Block Header}
+\begin{itemize}
+    \item Version - Blockchain version gets updated when more features are added
+    \item hashPreviousBlock - Contains double hash output of previous block header
+    \item hashMerkle Root - Contains hash of the Merkle Root of the transactions
+    \item Nonce - Answer to the cryptographic puzzle
+\end{itemize}
+
+ 
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{List of Transactions}
+\begin{itemize}
+    \item Number of Transactions include regular and a coinbase transaction
+    \item New blocks are made by a process called mining and the miner adds the mining reward by making a coinbase transaction
+\end{itemize}
+
+
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%bibliography%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
