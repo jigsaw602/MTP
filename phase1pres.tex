@@ -72,6 +72,15 @@ It is the following:
 \end{figure}
 
 \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{BITCOIN}
+\begin{itemize}
+    \item It was the pioneer in using block-chain 
+    \item User(s) named Satoshi Nagamoto proposed in \cite{nakamoto2008bitcoin} the use of block-chain along with the principles of economics and cryptography for a digital currency named Bitcoin 
+    \item Bitcoin is completely digitised and de-centralised crypto-currency (by the users for the users)
+\end{itemize}
+    
+\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -95,7 +104,16 @@ hash represents double hash output of SHA-256 hash function
 
  
 \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Merkle Tree}
+The hashMerkleRoot field stores the root hash of the Merkle Tree formed using the transactions in the block.
+\begin{figure}[H]\centering 
+\includegraphics[scale = 0.43]{merkletree.jpg}
+\caption{A 3-transaction Merkle Tree}
+\end{figure}
+\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{frame}{List of Transactions}
 \begin{itemize}
     \item Number of Transactions include regular and a coinbase transaction
@@ -104,8 +122,74 @@ hash represents double hash output of SHA-256 hash function
 
 
 \end{frame}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Bitcoin vs Banks }
+\begin{frame}{Bitcoin v Banks}
+Bitcoin is a digital currency, so we must compare it with the present system of banking to analyse whether it can form a good alternative. Comparison parameters are as follows:
+\begin{itemize}
+    \item Identity Management
+    \item Fund Transfer
+    \item Record Management
+    \item Trust
+\end{itemize}
+ 
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Identity Management}
+\begin{figure}[H]\centering 
+\includegraphics[scale = 0.6]{identity.jpg}
+\caption{Comparison of identity management between banks and Bitcoin}
+\end{figure}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Fund Transfer}
+    \begin{itemize}
+        \item Banks check for the validation of a transaction initiated and then it proceeds with the bank as the central entity tracking everything for the user and itself
+        \item Bitcoin is a de-centralised entity and such a model won't work for it, instead it uses the Unspent Transaction Output(UTXO) model
+    \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{UTXO Model}
+ \begin{figure}[H]\centering 
+\includegraphics[scale = 0.5]{utxo1.jpg}
+\caption{A has the following UTXOs}
+\end{figure}   
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{UTXO Model}
+ \begin{figure}[H]\centering 
+\includegraphics[scale = 0.5]{utxo2.jpg}
+\caption{B has requested 300 BTC from A}
+\end{figure}   
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{UTXO Model}
+\begin{itemize}
+    \item This model has been adopted since the transfer of funds is peer to peer and there is no central
+authority to verify whether the funds are available or not
+\item The complexity of checking transaction validity goes down as the whole history of transaction need not
+be verified
+\item The complexity of tracking one’s own funds goes up
+\end{itemize}
+    
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Record Management}
+ \begin{itemize}
+     \item Banks itself keeps updating every account details after every transaction
+     \item In Bitcoin every user on the network has a copy of the block-chain(ledger)
+     \item Once a transaction is done between users it is stored in a pool called 'MemPool' from where 'Miners' pick up transactions to add to a candidate block 
+ \end{itemize}   
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Frame Title}
+    
+\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%bibliography%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\bibliographystyle{plain}
-\bibliography{biblist}
+\begin{frame}{References}
+ \bibliographystyle{plain}
+\bibliography{biblist}   
+\end{frame}
+
 \end{document}
