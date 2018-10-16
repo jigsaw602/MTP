@@ -180,7 +180,71 @@ be verified
      \item Banks itself keeps updating every account details after every transaction
      \item In Bitcoin every user on the network has a copy of the block-chain(ledger)
      \item Once a transaction is done between users it is stored in a pool called 'MemPool' from where 'Miners' pick up transactions to add to a candidate block 
- \end{itemize}   
+ \end{itemize} 
+ \end{frame}
+ 
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+\begin{frame}{Mining}
+\begin{itemize}
+    \item The process of preparing a new block to append to the block chain is called \textbf{Mining}.Any one on the network can mine new blocks
+    \item One has to put in transactions from the mempool in the block along with its coin base transaction and thereafter find the nonce to solve the puzzle
+    \item The puzzle is to find the nonce such that when the block header is hashed , its output is below the target hash value set by the network
+    \item The hash target is set such that a block is mined every 10 minutes approximately
+    \item The nonce is found by brute force
+\end{itemize}
+ 
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Mining}
+ \begin{figure}[H]\centering 
+\includegraphics[scale = 0.4]{mining}
+\caption{Mining Procedure}
+\end{figure}   
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Trust}
+\begin{itemize}
+    \item Banks are regulated by the government thus we users end up trusting them
+    \item Block chain systems are supposed to be trust-less system, where the inherent design is robust against malicious actors
+    \item Proof of Work (PoW) consensus ensures that it is practically impossible to game the system
+    \item Once a candidate block is mined and is broadcasted to the network, at least 51\% of the users have to agree with the validity of the block for it to be appended, it isn't computationally difficult to check for the validity
+\end{itemize}
+
+    
+\end{frame}
+\section{Consensus Protocols}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Consensus Protocols}
+    \begin{itemize}
+        \item PoW is one of the consensus protocols, different block chains might use other ways to build consensus
+        \item Few other protocols include Proof of Stake (PoS), Casper Protocol
+        \item They are said to be successful if they solve the  Byzantine Generals Problem as stated in \cite{lamport1982byzantine}
+    \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Proof of Stake}
+\begin{itemize}
+    \item The Proof of stake protocol tries to remove the inefficiency of PoW of power consumption
+    \item Instead of miners there are validators who put their money on stake to validate a candidate block who get proportionate reward on successful addition of the block
+    \item Users with more money are more likely to become validators with their incentive being not to destabilise the network which could result in de-valuation of their assets
+    \item Validators could put stake on multiple chains as there is not sufficient disincentive 
+\end{itemize}
+
+    
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Casper Protocol}
+\begin{itemize}
+    \item PoS doesn't punish the validators for putting at stake the money on multiple blocks which could give rise to multiple branches of the chain (Nothing at Stake problem)
+    \item This was improved upon by the Casper protocol, by penalising wrong validation and thus losing out your tokens thereafter
+\end{itemize}
+    
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Smart COntracts}
+\begin{frame}{Application to contracts}
+    
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Frame Title}
