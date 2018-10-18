@@ -1,0 +1,339 @@
+
+\chapter{Literature Survey}
+The following chapter has been divided into three sections. Each section is devoted to summarising the respective research papers that are relevant in giving direction to the project.\par
+\noindent  \cite{lamport1982byzantine} contains the description of the byzantine generals problem along with the general requirements of the algorithm that would be able to solve it. The consensus mechanisms algorithms are supposed to solve this particular problem to become useful. \par
+\noindent \cite{hoppe2011can} provides an insight into how certain kinds of contracts can provide solution to the hold up problem through an experiment.\par
+\noindent \cite{holden2017can} takes a step up further and talks about how block chain technology can be exploited to implement smart contracts and solve the hold up problem
+
+\section{The Byzantine Generals Problem}
+There is a city which has been surrounded by \textit{n} enemy generals and their troops who are planning on attacking it. Out of these \textit{n} generals \textit{m} are traitors who will try to foil their co-ordination, thus the generals must come up with a communication algorithm that will achieve the following objectives:
+\begin{itemize}
+\item[A)] All \textbf{loyal} generals must follow the \textbf{same} plan of action
+\item[B)] A small number of traitors must not be able to cause the loyal generals to adopt a bad plan
+\end{itemize}
+One such approach that could potentially achieve A \& B is that every general must observe the enemy and convey via a message to the rest of the \textit{(n-1)} generals about his observation that consists of either an \textbf{attack} or \textbf{retreat}. Eventually each general will have a set of  \textit{n} observations \textit{{v(1)....v(n)}} including his own. Now, every general will count the number of attacks vs the number of retreats received and act according to what the majority say.\par
+But there lies various problems with the approach that could hinder with the conditions A \& B. For instance what if the traitors send their observations in such a manner that few loyal generals get a attack majority and few retreat majority hence condition A is negated. Thus we impose few restrictions so that this approach works. These are:
+\begin{itemize}
+\item[1.] All loyal generals must receive the same set of information i.e. any two loyal generals must use the same value of \textit{v(i)}
+\item[2.] If the i$^{th}$ general is loyal then his message \textit{v(i)} must be read as it is.
+\end{itemize}
+Above two conditions are with respect to how the message \textit{v(i)} is being conveyed, thus the problem is re-formulated to a \textbf{commander} sending \textit{ v(i)} to his \textit{(n-1)} \textbf{lieutenants} such that:
+\begin{itemize}
+\item[IC1] All loyal lieutenants obey the same command
+\item[IC2] If the commander turns out to be loyal then all the loyal lieutenants obey his command
+\end{itemize}
+IC1 and IC2 are called Interactive Consistency conditions that ensure conditions 1 \& 2 . They are so called as these conditions will allow the loyal lieutenants to come to a consistent view of the messages sent by all of them irrespective of whether they are loyal or not.
+This re-formulated problem is known as the \textbf{Byzantine Generals Problem}.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Impossibility Results}
+First we need to understand that messages will be sent in the form of oral messages (OM), which has three properties as follows:
+\begin{itemize}
+\item[A1] All messages are delivered correctly
+\item[A2] Recipient knows who has sent the message
+\item[A3] Absence of message can be detected 
+\end{itemize}
+Thereafter, a question needs to be asked:
+Exactly how many generals could be traitors for the system to still achieve its objectives? Answer to which is that if the generals can send only oral messages then no solution will work unless more than two-thirds of the generals are loyal.
+
+\textbf{Result}: If oral messages are to be sent then more than three generals are required to handle one traitor.
+
+\textbf{Proof}: Let us first understand the two scenarios possible for a 3-general problem with  one traitor using the following two diagrams.
+\begin{figure}[H]\centering 
+\includegraphics[scale = 0.35]{lit/impos1}
+\caption{Case 1: One of the Lieutenants is a traitor}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[scale = 0.35]{lit/impos2}
+\caption{Case 2: The commander is a traitor}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ From the perspective of L-1 both the above scenarios seem same i.e. \textbf{L-2} tells him \textbf{Retreat} and the \textit{Commander} tells him to \textit{Attack}.\par
+Thus if the traitor lies consistently, there is no way for L-1 to tell who is the traitor and he will always choose 'Attack' in both cases i.e. obey the commander. We are trying to reach a solution for a 3-General problem with 1 traitor thats why he is choosing to obey the commander else IC2 will never be satisfied and we will never reach a solution if it exists. Similarly, we can say that L-2 will listen to the commander and 'Retreat'.\par
+We don't know actually which case is happening and if a solution is to exist both cases should satisfy IC1 \& IC2. But both IC1 and IC2 get violated when the commander is the traitor, thus we can conclude with the above reasoning that no solution exists for this problem.\par
+\textbf{Generalizing the proof}:\par
+Using the result from above intuition we can prove that no solution exists for less than \textbf{(3m+1)} generals to cope with at most \textbf{m} traitors.\par
+\begin{itemize}
+\item Assume that a solution exists for a group of '3m' generals,  we call these '3m' generals \textit{Albanian} generals
+\item Now, we will use this assumption to construct a 3 general solution with one traitor, we will call these 3 generals as \textit{Byzantine} generals
+\item The 3-general solution is obtained by having each of the Byzantine generals simulate approximately one-third of the Albanian generals.
+\item Each Byzantine general simulates at most 'm' Albanian generals, thus the Byzantine commander simulates the Albanian commander plus at most (m-1) Albanian lieutenants, while other 2 Byzantine lieutenants simulate at most m Albanian lieutenants each
+\item Since only one Byzantine general can be a traitor, and he simulates at most 'm' Albanian generals, thus at most 'm' Albanian generals are traitors
+\item Hence the assumed solution consisting of \textbf{3m} Albanian generals with at most \textbf{m} traitors guarantees IC1 
+\begin{itemize}
+\item By IC1 all the Albanian lieutenants being simulated by a loyal Byzantine lieutenant obey the same order , which is the order he is to obey
+\end{itemize}
+and IC2 which in turn implies that we have constructed a solution for the corresponding 3-general problem  which is impossible
+\item Hence the proof follows by contradiction
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{Simulation}:\par
+\begin{figure}[H]\centering
+\includegraphics[scale = 0.5]{lit/mapping}
+\caption{ Albanian generals mapped to Byzantine generals}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{A solution with oral messages (OM)}
+\textbf{Meaning of Oral Message} \par
+As stated earlier assumptions A1,A2\&A3 form the definition of an oral message. \par A1(Correct delivery of message) and A2(Recipient knows who sent the message) ensure that no traitor can interfere with communication between two other generals.\par
+A3 (Absence of a message can be detected) will foil a traitor's intent of preventing decision making by not sending messages.\par
+\textbf{The OM Algorithm}\par
+OM(0):
+\begin{itemize}
+\item[1.] The commander sends his value to every lieutenant.
+\item[2.] Each lieutenant uses the value he receives from the commander, or uses the value RETREAT if he receives no value.
+\end{itemize}
+OM(m), m$>$0:
+\begin{itemize}
+\item[1.] The commander sends his value to every lieutenant.
+\item[2.] For each i, let $v_i$ be the value Lieutenant i receives from the commander, or else be
+RETREAT if he receives no value. Lieutenant i acts as the commander in Algorithm
+OM(m - 1) to send the value $v_i$ to each of the \textit{(n - 2)} other lieutenants.
+\item[3.] For each 'i', and each $j\neq i$, let $v_j$ be the value Lieutenant 'i' received from Lieutenant 'j'
+in step (2) (using Algorithm OM(m - 1)), or else RETREAT if he received no such
+value. Lieutenant 'i' uses the value majority \textit{($v_1$, . . . . . ,$v_{n-1}$)}.
+\end{itemize}
+ The algorithm assumes a function \textbf{majority} with the property that if a majority
+of the values $v_i$ equal \textbf{v}, then majority \textit{($v_1$ ,. . . . . ,$v_{n-1}$)} equals \textbf{v}.\par
+\textbf{Working of the OM(m) algorithm}:\par
+Consider an instance of the case when m = 1, n = 4 with one of the lieutenants as the traitor:
+\begin{figure}[H]\centering
+\includegraphics[scale = 0.5]{lit/omm1}
+\caption{Case 1: one of the Lieutenants is a traitor}
+\label{fig:OMM1}
+\end{figure}
+Figure \ref{fig:OMM1} illustrates the messages received by \textbf{Lieutenant 2} when the commander send the value \textit{v}
+\begin{itemize}
+\item In the first step of OM(1), the
+commander sends \textit{v} to all three lieutenants.
+\item In the second step, Lieutenant 1
+sends the value v to Lieutenant 2, using the trivial algorithm OM(0) and the treacherous Lieutenant 3 sends Lieutenant 2 some other value \textit{x}
+\item In third step , Lieutenant 2 then has v~ = $v_2$ =~ v and $v_3$ = x, so he obtains the correct
+value v =~\textbf{majority} (v, v, x).
+\end{itemize}
+Thus, All the loyal lieutenants will follow the same plan of action and same as that of the loyal commander satisfying IC2 whereas IC1 is trivially satisfied.\par
+Now, we will assess whether  our algorithm works if the commander is a traitor. Figure \ref{fig:OMM2} shows the flow of messages in such a scenario. Each lieutenant obtains $v_1$ = x, $v_2$ = y,
+and $v_3$ = z, so they all obtain the \textbf{same} value \textit{majority(x, y, z)} in step (3),
+regardless of whether or not any of the three values x, y, and z are equal. Hence all loyal lieutenants will follow the same plan satisfying IC1, IC2 need not be satisfied since commander is disloyal.
+\begin{figure}[H]\centering
+\includegraphics[scale = 0.9]{lit/omm2}
+\caption{Case 2: Commander is the traitor}
+\label{fig:OMM2}
+\end{figure}
+
+\subsection{A solution with signed messages (SM)}
+\noindent If we could take away the lying ability of traitors the problem's difficulty could further reduce. One was to do this is to allow the generals to send unforgeable signed messages. Another assupmtion is added to the the assumptions A1 - A3 .
+\begin{itemize}
+    \item[A4 a)] A loyal general's signature cannot be forged, and any alteration of the
+contents of his signed messages can be detected
+    \item[b)] Anyone can verify the authenticity of a general's signature
+\end{itemize}
+Now that we have introduced signed messages, our previous argument that four generals are required to cope with one traitor no longer holds. In fact, a
+three-general solution does exist. We now give an algorithm that copes with m traitors for any number of generals. (The problem is vacuous if there are fewer than m + 2 generals.) \par 
+\noindent In the algorithm the commander sent a signed order to each of his lieutenants who then forward the message by adding their signatures. Thus every lieutenant is required to make several copies of the message it receives sign it and send to every other lieutenant. The algorithm assumes a function choice which is applied to to a set of orders to obtain a single one. The only requirements we make for this function are: 
+\begin{itemize}
+    \item [1.] If the set V consists of the single element v, then $choice(V) = v.$
+    \item[2.] $choice(\Phi) = $ RETREAT, where $\Phi$ is the empty set.
+\end{itemize}
+\noindent
+\textbf{Algorithm SM(m)} \\
+Initially $V_i = \Phi$
+\begin{itemize}
+    \item[1.] The commander signs and sends his value to every lieutenant.
+    \item[2.]For each i:
+    \begin{itemize}
+        \item[A.]If Lieutenant i receives a message of the form $v: 0$ from the commander and he has not yet received any order, then
+        \begin{itemize}
+            \item[(i)] he lets $ V_i =  {v}$;
+            \item[(ii)] he sends the message $v: 0 : i$ to every other lieutenant.
+        \end{itemize}
+        \item[B.]If Lieutenant $i$ receives a message of the form $v : 0 :j_1 : ... : j_k$ and $v$ is not in the set $V_i$, then
+        \begin{itemize}
+            \item[(i)]he adds $v to V_i$;
+            \item[(ii)] if $k<m,$ then he sends the message $v:0 :j_l : . . . :j_k : i$ to every lieutenant other than$ j_l . . . . . jk.$
+        \end{itemize}
+    \end{itemize}
+    \item[3.]For each $i$: When Lieutenant i will receive no more messages, he obeys the order
+$choice( V_i)$.
+\end{itemize}
+
+\section{Can Contracts solve the hold up problem? An Experimental Evidence}
+\subsection{What is the hold up problem?}
+\noindent According to \cite{wiki:xxx} when two parties could have worked more efficiently by cooperating but refrain from doing so in the fear of giving more bargaining power to the counter-party. Historical Example is of how Fisher Body had held up General Motors(GM). Fisher body, which is an automobile coach builder had an exclusive contract with General Motors to supply car body parts and it was the only company to deliver to GM according to specifications required by GM. Suddenly there was an increase in demand way above expectation which Fisher Body used to hold up GM and increased the price for the additional parts produced. Eventually GM acquired Fisher Body that year.
+
+\subsection{The Experiment}
+ \noindent The experiment requires two parties a buyer and a seller of an indivisible good. At date 1 both parties have to agree whether they will trade at date 2 or not. One agreement the seller has to decide whether he should make a non-contractual relationship specific investment on the good or not which will increase the good's value. The seller could decide not to invest as he might fear that the buyer will end up with more bargaining power and hold him up on date 2 and resulting in losses for the seller. \par
+\noindent To investigate this problem an experiment was conducted using a computer program where participants were randomly and anonymously assigned as buyers or sellers and given set of instructions regarding the trade under the following four scenarios:
+\begin{itemize}
+\item No Contract (NC+)
+\item Fixed Price Contract (FP)
+\item Options Contract with no re-negotiation(OC)
+\item Options Contract with re-negotiation(OCR)
+\end{itemize}
+\textbf{Notations:} \par \noindent
+$e$ : investment decision of buyer 
+$e \, \epsilon \{e_l,e_h\}$ \\
+$e_l$ = 0\EUR , $e_h$ = 8\EUR \\
+$v(e)$ : Value of the good as a function of the investment \\
+$v(e_l) = 10$\EUR , $v(e_h)= 22$\EUR \\
+$p$: price offered by buyer whenever he has to make a take it or leave it offer
+
+\subsubsection{No Contract}
+There are four stages in this treatment:
+\begin{itemize}
+    \item Stage 1: Both parties decide whether to trade or not
+    \item Stage 2: If they choose to participate then the seller make investment decision $e$
+    \item Stage 3: Buyer learns how much the seller has invested and decides upon his own valuation $v(e)$ to make a take it or leave it offer of $p$ to the seller
+    \item Stage 4:Seller decides whether or not to accept the offered price $p$
+\end{itemize}
+The standard theoretic literature predicts that in such a scenario if both have agreed to trade then seller will accept any offer greater than 0, Buyer will offer $p = 0$, anticipating this seller will choose $e = 0$
+Further, the treatment can be modelled as a extensive form game to compute the payoffs as shown in figure \ref{fig:NC}
+\begin{figure}[H]\centering
+\includegraphics[scale = 1.5]{lit/NCtree}
+\caption{Treatment 1: NC game tree}
+\label{fig:NC}
+\end{figure}
+\subsubsection{Fixed Price Contract}
+\noindent There are two stages in this treatment:
+\begin{itemize}
+    \item Stage 1:Both decide whether to enter into a contract which says that good will be sold at price $p=15$\EUR on date 2
+
+    \item Stage 2:If the contract has been accepted by both then the seller makes an investment decision $e$
+\end{itemize}
+The standard theoretic literature predicts that in such a scenario if both have agreed to trade then the  seller will choose $e=0$ since he will be getting $p=15$ regardless of his investment.Buyer will never sign such a contract where $p>v(0) $
+Further, the treatment can be modelled as a extensive form game to compute the payoffs as shown in figure \ref{fig:FP}
+\begin{figure}[H]\centering
+\includegraphics[scale = 1]{lit/FPtree}
+\caption{Treatment 2: FP game tree}
+\label{fig:FP}
+\end{figure}
+
+\subsubsection{Option Contract with no Renegotiation}
+There are three stages in this treatment:
+\begin{itemize}
+    \item Stage 1: Both parties Decide whether or not to accept the contract that says that the buyer has the \textit{option} to buy the good at $p =15$ on date 2
+    \item Stage 2: If they choose to participate then the seller make investment decision $e$
+    \item Stage 3: Buyer learns how much the seller has invested and decides upon his own valuation $v(e)$ and decides whether to exercise his option or not
+\end{itemize}
+The standard theoretic literature predicts that in such a scenario if both have agreed to trade then the buyer will only exercise the option if $e=8$, anticipating  this the seller will decide $e$ to be as 8, hence first best outcome can be achieved with OC. \par \noindent 
+
+Further, the treatment can be modelled as a extensive form game to compute the payoffs as shown in figure \ref{fig:OC}
+\begin{figure}[H]\centering
+\includegraphics[scale = 1]{lit/OCtree}
+\caption{Treatment 3: OC game tree}
+\label{fig:OC}
+\end{figure}
+
+\subsubsection{Option Contract with Renegotiation}
+There are four stages in this treatment:
+\begin{itemize}
+    \item The first three stages are same as in the case of OC
+    \item Stage 4:Buyer rejects option and renegotiates with a take it or leave it offer of price $p$
+\end{itemize}
+The standard theoretic literature predicts that in such a scenario if both have agreed to trade then the buyer will not exercise option even if seller chooses high investment level as he will be able to extract more return during renegotiation.Anticipating this, seller lacks sufficient incentives to make a high level investment so his investment will be 0.
+ \par \noindent 
+
+Further, the treatment can be modelled as a extensive form game to compute the payoffs as shown in figure \ref{fig:OCR}
+\begin{figure}[H]\centering
+\includegraphics[scale = 1]{lit/OCRtree}
+\caption{Treatment 4: OCR game tree}
+\label{fig:OCR}
+\end{figure}
+
+\subsubsection{Major Predictions:} 
+Four major predictions have been made using standard theoretic arguments which are as follows:
+\begin{itemize}
+    \item[P1] The FP contract cannot mitigate the hold up problem i.e. in the FP treatment we will not observe more high investment than in NC+
+    \item[P2] OC is an effective remedy for the hold up problem i.e. in the OC treatment we will observe more high investments than in NC+ and FP
+    \item[P3] Contract renegotiation is harmful i.e. with OCR treatment we will observe fewer high investments than in the OC treatment
+    \item[P4] Renegotiation makes contracting redundant i.e. in the OCR treatment we will observe the same fraction of high investments as in the NC+ treatment
+\end{itemize}
+
+\subsubsection{Results:}
+Figure \ref{fig:res1} shows the non-participation and investment behaviour of the participants under the four treatments.
+
+\begin{figure}[H]\centering
+\includegraphics[scale = 1.5]{lit/results}
+\caption{Non-participation and investment behaviour}
+\label{fig:res1}
+\end{figure}
+
+\noindent In NC+ 41.5\% of sellers chose to invest high. It is not that surprising given abundance of prior experimental evidence suggesting that such a behavior can be explained by social preferences. All of them chose to trade thus we can speculate that this created a cooperative atmosphere which led the sellers to commit to this relationship by investing.
+This was proved wrong by conducting another experiment with no stage 1. \par
+\noindent In FP 21.8\% times the contract was rejected and all the times by the buyer as the theory had predicted. \par \noindent
+In OC, 90\% high level investment implies directly that OC is highly effective in inducing investment from the seller and thus mitigating the hold up problem. \par \noindent
+In OCR, there is only 6.2\% rejections and conditioned on acceptance of contract 71.7\% chose high level of investment contrary to the prediction P4. \par \noindent
+Thus it is concluded that P1,P2,P3 are backed by the results obtained and P4 is rejected. Table \ref{tab:table1} of pairwise comparisons conclude the same thing that although NC+ and OCR look the same theoretically but the results are far from the predictions. OC has successfully mitigated the problem and has higher investments than any of the treatments. \pagebreak
+
+
+% \begin{table}[H]
+%   \begin{center}
+%     \caption{Pairwise Comparison p-values}
+%     \label{tab:table1}
+%     \begin{tabular}{|m|m|m|m|m|m|m|} 
+%     \hline
+%       \textbf{} & \textbf{NC+ vs FP} & \textbf{NC+ vs OC} & \textbf{FP vs OC} & \textbf{OC vs OCR} & \textbf{FP vs OCR} & \textbf{NC+ vs OCR}\\
+    
+%       \hline
+%       All Obs.  & 0.0463 & <0.001 & <0.001 & 0.0018 & <0.001 & 0.0086\\
+%       \hline
+%          Participated  & 0.4090 & <0.001 & <0.001 & 0.0097 & <0.001 & 0.0021\\
+%       \hline
+%     \end{tabular}
+%   \end{center}
+% \end{table}
+\begin{table}[]
+\begin{tabular}{lllllll}
+\hline
+\multicolumn{1}{|l|}{} & \multicolumn{1}{l|}{NC v FP} & \multicolumn{1}{l|}{NC v OC} & \multicolumn{1}{l|}{FP v OC} & \multicolumn{1}{l|}{OC v OCR} & \multicolumn{1}{l|}{FP vOCR} & \multicolumn{1}{l|}{NC v OCR} \\ \hline
+\multicolumn{1}{|l|}{All obs.} & \multicolumn{1}{l|}{0.0463} & \multicolumn{1}{l|}{\textless{}0.001} & \multicolumn{1}{l|}{\textless{}0.001} & \multicolumn{1}{l|}{0.0018} & \multicolumn{1}{l|}{\textless{}0.001} & \multicolumn{1}{l|}{0.0086} \\ \hline
+\multicolumn{1}{|l|}{Participated} & \multicolumn{1}{l|}{0.409} & \multicolumn{1}{l|}{\textless{}0.001} & \multicolumn{1}{l|}{\textless{}0.001} & \multicolumn{1}{l|}{0.0097} & \multicolumn{1}{l|}{\textless{}0.001} & \multicolumn{1}{l|}{0.0021} \\ \hline
+ &  &  &  &  &  & 
+\end{tabular}
+\caption{Pairwise Comparison p-values}
+\label{tab:table1}
+\end{table}
+
+
+
+
+\section{Can block chain solve the hold up problem in contracts?}
+As described and illustrated in the previous section, a hold up problem is a very basic problem emanating in contracts where a party refuses to perform when a counter party has made a relationship specific investment, unless offered better terms. Basically using hold up the party holding up wants to extract the surplus generated by the investment of the other party. Thus if we look at it analytically we will find a simple fault in the contract i.e. we must somehow look to avoid re-negotiation. Economist have devised solutions to circumvent these problems in contract such as renegotiation design and revelation mechanisms but they seem to be good only on paper and difficult to implement because of requirement of strong commitment.
+
+\subsection{Renegotiation design mechanism}
+\noindent Consider a game where there are two players (buyer and seller) who can make non-contractual relationship specific investment to decrease production costs(seller) and increase value of good (buyer).Social optimum could be achieved if re-negotiation could re-structured differently. \cite{aghion1990renegotiation} formulated a design which had two components 
+\begin{itemize}
+    \item Default Trade requested by a party even when held up
+    \item Bargaining Power resides with the other party
+\end{itemize}
+Let's say the buyer has the bargaining power and the seller the with default trade option. Since the seller has the default trade option it will choose to invest and the buyer having all the bargaining power will also choose to invest.
+
+\subsection{Smart Contracts}
+\noindent Smart contracts are nothing but contract clauses and scenarios written in the form of code which get executed automatically on fulfillment of conditions.\textit{Ethereum} is one such public block-chain that has the capability of incorporating smart contracts in it. Individuals can write smart contracts in the solidity(scripting language of Ethereum) and the network can validate and thereafter execute it. In the context of the hold up problem smart contracts allow parties to more credibly commit to original contracts or to renegotiation structuring mechanisms and make information more verifiable to courts settling disputes.\par \noindent 
+\subsubsection{Example of implementation of smart contract}
+Corning is a company that provides gorilla glass to Apple (Mobile Manufacturer). Corning, the seller could make an investment of 5\$ to reduce its cost from 16\$ to 10\$ while Apple could invest 5\$ to market Corning's superior glass in a way to increase its value from 32\$ to 40\$ . \par \noindent
+"Assuming both the parties wish to write a contract that includes the \cite{aghion1990renegotiation} mechanism to structure the renegotiation after a hold up so that the hold up does not deter the relationship specific investment. We would first ask how much information the parties have. If it is enough to devise a renegotiation design or revelation mechanism, then the parties would want to construct a penalty provision that deters deviation from the mechanism and that cannot be undone by courts or the parties through renegotiation.Of course, such a penalty provision would also bar renegotiation due honestly to changed circumstances and that does not affect ex ante incentives to invest.Block-chain makes it possible for penalties to flow to third parties. All the smart contract has to do is specify that some large amount would be transferred from Apple's account (its public address or key) on the network to a randomly generated list of public addresses or keys and that the smart contract would announce to the block-chain network the private keys associated with those public keys. The latter step would allow any node on the network to access and transfer to their account the money at those public addresses. \par \noindent
+The future commitment feature of smart contracts and the irreversibility of block-chain transactions can render court injunctions ineffective. Once the parties sign the agreement, future exchanges are already booked and cannot be undone  by either the parties or a court  without having either a majority of the computing power or the tokens on the block-chain. A court does not have that. Thus, a court can no more require a transaction on block-chain be reversed than it can require that the stock price of a company that committed fraud increase to compensate shareholders." - Source \cite{holden2017can}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../mainrep"
+%%% End: 
