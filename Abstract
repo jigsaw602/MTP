@@ -1,0 +1,11 @@
+%============================= abs.tex================================
+\begin{Abstract}
+Block-chain technology successfully exploits the concepts of distributed ledger, immutability, tamper evidence to bring about a potential to be applied to real world scenarios like executing contracts automatically. In order for the users on the block chain network to agree to valid transactions to be recorded on the distributed ledger a robust consensus protocol must be in action in the block chain. Eventually all these functions could be used to solve the hold up problem in contracts by implementing the digital form of contracts known as the smart contracts which through its automation and irreversibility provides the necessary commitments required for implementing the theoretical solutions to the hold up problem.
+%
+%
+%
+%
+%
+\end{Abstract}
+%=======================================================================
+
